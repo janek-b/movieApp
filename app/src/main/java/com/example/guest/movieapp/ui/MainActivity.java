@@ -1,4 +1,4 @@
-package com.example.guest.movieapp;
+package com.example.guest.movieapp.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,11 +13,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.example.guest.movieapp.Constants;
+import com.example.guest.movieapp.R;
 import com.example.guest.movieapp.services.MovieService;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    @Bind(R.id.searchInputField) EditText mSearchField;
+    @Bind(R.id.searchButton) Button mSearchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,20 +33,21 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
 
         MovieService movieService = new MovieService();
         Log.d("test", movieService.buildDetailUrl(Constants.SIMILAR, 603));
         Log.d("test", movieService.buildDetailUrl(Constants.CREDITS, 603));
         Log.d("test", movieService.buildSearchlUrl("The Matrix"));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                String searchInput = mSearchField.getText().toString();
+                Log.d("test", MovieService.buildSearchlUrl(searchInput));
             }
         });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
