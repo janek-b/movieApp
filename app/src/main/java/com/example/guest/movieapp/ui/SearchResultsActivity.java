@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -48,6 +49,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String searchInput = intent.getStringExtra("search");
         getMovies(searchInput);
+        setTitle("Search Results for " + searchInput);
     }
 
     @Override
@@ -61,7 +63,7 @@ public class SearchResultsActivity extends AppCompatActivity {
             .subscribeOn(Schedulers.io())
             .map(new Function<String, ArrayList<Movie>>() {
                 @Override public ArrayList<Movie> apply(String string) {
-                    ArrayList<Movie> movies = new ArrayList<Movie>();
+                    ArrayList<Movie> movies = new ArrayList<>();
                     JsonArray results = new Gson().fromJson(string, JsonObject.class).getAsJsonArray("results");
                     for (JsonElement item : results) {
                         movies.add(new Gson().fromJson(item.toString(), Movie.class));
@@ -72,7 +74,11 @@ public class SearchResultsActivity extends AppCompatActivity {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(new DisposableObserver<ArrayList<Movie>>() {
                 @Override public void onNext(@NonNull ArrayList<Movie> s) {
-
+                    mAdapter = new MovieSearchAdapter(getApplicationContext(), s);
+                    mSearchView.setAdapter(mAdapter);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SearchResultsActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                    mSearchView.setLayoutManager(layoutManager);
+                    mSearchView.setHasFixedSize(true);
                 }
                 @Override public void onError(@NonNull Throwable e) { e.printStackTrace(); }
                 @Override public void onComplete() {}

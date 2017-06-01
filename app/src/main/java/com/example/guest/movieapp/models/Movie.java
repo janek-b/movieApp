@@ -1,6 +1,9 @@
 package com.example.guest.movieapp.models;
 
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Movie {
     String title;
     String poster_path;
