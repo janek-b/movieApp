@@ -77,7 +77,6 @@ public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.
             if (getLayoutPosition() % 2 == 0) {
                 mEachMovie.setBackgroundColor(0xFF00FF00);
             }
-
         }
 
         @Override
