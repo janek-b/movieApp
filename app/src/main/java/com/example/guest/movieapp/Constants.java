@@ -8,4 +8,5 @@ public class Constants {
     public static final String SIMILAR = "/movie/%d/similar";
     public static final String CREDITS = "/movie/%d/credits";
     public static final String SEARCH_PARAM = "query";
+    public static final String IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 }
