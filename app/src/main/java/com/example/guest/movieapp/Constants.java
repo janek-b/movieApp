@@ -7,4 +7,5 @@ public class Constants {
     public static final String SEARCH_MOVIE = "/search/movie";
     public static final String SIMILAR = "/movie/%d/similar";
     public static final String CREDITS = "/movie/%d/credits";
+    public static final String SEARCH_PARAM = "query";
 }

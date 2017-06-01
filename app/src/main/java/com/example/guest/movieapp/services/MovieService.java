@@ -7,10 +7,15 @@ import okhttp3.HttpUrl;
 
 public class MovieService {
 
-    public static String buildSimilarUrl(int id) {
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.BASE_URL).newBuilder();
-        urlBuilder.addPathSegment(String.format(Constants.SIMILAR, id));
+    public static String buildDetailUrl(String segment, int id) {
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.BASE_URL + String.format(segment, id)).newBuilder();
         urlBuilder.addQueryParameter(Constants.API_PARAM, Constants.API_KEY);
+        return urlBuilder.build().toString();
+    }
+    public static String buildSearchlUrl(String search) {
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.BASE_URL + Constants.SEARCH_MOVIE).newBuilder();
+        urlBuilder.addQueryParameter(Constants.API_PARAM, Constants.API_KEY);
+        urlBuilder.addQueryParameter(Constants.SEARCH_PARAM, search);
         return urlBuilder.build().toString();
     }
 }
